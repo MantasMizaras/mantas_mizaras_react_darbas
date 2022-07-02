@@ -13,6 +13,14 @@
   align-items: stretch;
 }
 
+.is-valid {
+  border: 0.01rem solid lightgreen;
+}
+
+.is-invalid {
+  border: 0.01rem solid tomato;
+}
+
 .button {
   margin-top: 0.5rem;
 }

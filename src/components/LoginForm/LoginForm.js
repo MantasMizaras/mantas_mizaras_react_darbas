@@ -2,15 +2,12 @@ import css from './LoginForm.module.css';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { myFetch } from '../../utils';
+import { baseUrl, myFetch } from '../../utils';
 
 const initValues = {
   email: '',
   password: '',
 };
-
-const baseUrl = process.env.REACT_APP_BACKEND_URL;
-if (!baseUrl) throw new Error('baseUrl nerastas');
 
 function LoginForm() {
   const formik = useFormik({
