@@ -2,11 +2,15 @@ import css from './LoginForm.module.css';
 
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
+import { myFetch } from '../../utils';
 
 const initValues = {
   email: '',
   password: '',
 };
+
+const baseUrl = process.env.REACT_APP_BACKEND_URL;
+if (!baseUrl) throw new Error('baseUrl nerastas');
 
 function LoginForm() {
   const formik = useFormik({
@@ -15,8 +19,9 @@ function LoginForm() {
       email: Yup.string().email('Patikrinkite savo email').required(),
       password: Yup.string().min(4, 'Mažiausiai 4 simboliai').max(10, 'Daugiausiai 10 simbolių').required(),
     }),
-    onSubmit: (values) => {
-      console.log('values ===', values);
+    onSubmit: async (values) => {
+      const fetchResult = await myFetch(`${baseUrl}/v1/auth/login`, 'POST', values);
+      console.log('fetchResult ===', fetchResult);
     },
   });
 
