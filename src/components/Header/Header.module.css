@@ -22,3 +22,9 @@
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+.email {
+  font-size: 20px;
+  color: rgb(248, 253, 246);
+  pointer-events: none;
+}
