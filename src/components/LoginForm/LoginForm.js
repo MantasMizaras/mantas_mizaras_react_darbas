@@ -3,6 +3,8 @@ import css from './LoginForm.module.css';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { baseUrl, myFetch } from '../../utils';
+import { useHistory } from 'react-router-dom';
+import { useAuthCtx } from '../../store/AuthContext';
 
 const initValues = {
   email: '',
@@ -10,6 +12,8 @@ const initValues = {
 };
 
 function LoginForm() {
+  const history = useHistory();
+  const ctx = useAuthCtx();
   const formik = useFormik({
     initialValues: initValues,
     validationSchema: Yup.object({
@@ -17,8 +21,19 @@ function LoginForm() {
       password: Yup.string().min(4, 'Mažiausiai 4 simboliai').max(10, 'Daugiausiai 10 simbolių').required(),
     }),
     onSubmit: async (values) => {
-      const fetchResult = await myFetch(`${baseUrl}/v1/auth/login`, 'POST', values);
-      console.log('fetchResult ===', fetchResult);
+      const fetchLoginResult = await myFetch(`${baseUrl}/v1/auth/login`, 'POST', values);
+
+      if (fetchLoginResult.msg === 'Successfully logged in') {
+        ctx.login(fetchLoginResult.token, values.email);
+        history.replace('/');
+      }
+      console.log('fetchLoginResult ===', fetchLoginResult);
+      if (!fetchLoginResult.token) {
+        console.log('login failed');
+        return;
+      }
+      ctx.login(fetchLoginResult.token);
+      console.log('submiting values ===', values);
     },
   });
 
