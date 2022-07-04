@@ -18,7 +18,6 @@ export async function myFetchAuth(url, token) {
     const options = {
       headers: {
         'Content-Type': 'application/json',
-
         Authorization: `Bearer ${token}`,
       },
     };
