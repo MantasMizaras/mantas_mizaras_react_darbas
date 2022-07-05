@@ -13,7 +13,7 @@ export async function myFetch(url, method = 'GET', data = null) {
   }
 }
 
-export async function myFetchAuth(url, token) {
+export async function myFetchAuth(url, method = 'GET', token, data = null) {
   try {
     const options = {
       headers: {
@@ -21,6 +21,8 @@ export async function myFetchAuth(url, token) {
         Authorization: `Bearer ${token}`,
       },
     };
+    options.method = method === 'POST' ? 'POST' : 'GET';
+    options.body = data ? JSON.stringify(data) : null;
     const resp = await fetch(url, options);
     const dataInJs = await resp.json();
     return dataInJs;
