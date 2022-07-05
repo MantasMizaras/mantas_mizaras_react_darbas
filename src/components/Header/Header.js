@@ -22,11 +22,7 @@ function Header(props) {
             <NavLink onClick={logout} className={css['nav-link']} to={'/login'}>
               Logout
             </NavLink>
-            {/* <div>
-              <a className='nav-link disabled' href='/'>
-                {userEmail}
-              </a>
-            </div> */}
+            {isUserLoggedIn && <p className={css.email}>You are logged in as: {userEmail}</p>}
           </>
         )}
         {!isUserLoggedIn && (

@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
 import RegisterPage from './pages/RegisterPage';
 import { Toaster } from 'react-hot-toast';
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 
 function App() {
   return (
@@ -21,12 +22,12 @@ function App() {
         <Route path={'/login'}>
           <LoginPage />
         </Route>
-        <Route path={'/add'}>
+        <ProtectedRoute path={'/add'}>
           <AddPage />
-        </Route>
-        <Route exact path={'/'}>
+        </ProtectedRoute>
+        <ProtectedRoute exact path={'/'}>
           <HomePage />
-        </Route>
+        </ProtectedRoute>
         <Route path={'*'}>
           <NotFoundPage />
         </Route>

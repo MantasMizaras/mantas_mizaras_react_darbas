@@ -13,7 +13,7 @@
   text-decoration: none;
 }
 .nav-link:hover {
-  background-color: rgb(188, 175, 175);
+  background-color: rgb(251, 87, 87);
 }
 
 .img {
@@ -24,5 +24,7 @@
 }
 
 .email {
-  font-size: 20px;
+  font-size: 10px;
+  color: aliceblue;
+  border: 1px solid greenyellow;
 }
