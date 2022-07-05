@@ -18,8 +18,14 @@ function AddForm() {
   const formik = useFormik({
     initialValues: initValues,
     validationSchema: Yup.object({
-      title: Yup.string().min(2, 'At least 2 symbols are required').max(15, 'Up to 15 symbols are allowed').required(),
-      description: Yup.string().min(5, 'At least 5 symbols are required').max(80, 'Up to 80 symbols are allowed').required(),
+      title: Yup.string()
+        .min(2, 'At least 2 symbols are required')
+        .max(15, 'Up to 15 symbols are allowed')
+        .required('Title laukas būtinas'),
+      description: Yup.string()
+        .min(5, 'At least 5 symbols are required')
+        .max(80, 'Up to 80 symbols are allowed')
+        .required('Description laukas būtinas'),
     }),
     onSubmit: async (values) => {
       console.log('values ===', values);
@@ -36,48 +42,39 @@ function AddForm() {
     },
   });
 
-  function rightClassesForInput(field) {
-    let resultClasses = css['form-control'];
-
-    if (formik.touched[field]) {
-      resultClasses += formik.errors[field] ? ' is-invalid' : ' is-valid';
-    }
-
-    return resultClasses;
-  }
-
   return (
     <div className={css['form-container']}>
       <h1>Add skills</h1>
 
       <form onSubmit={formik.handleSubmit}>
         <div className={css['form-group']}>
-          <label htmlFor='email'>Title</label>
+          <label htmlFor='title'>Title</label>
           <input
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.title}
-            className={rightClassesForInput('title')}
+            className={formik.touched.title && formik.errors.title ? css['is-invalid'] : ''}
             type='title'
             id='title'
             name='title'
           />
-          <div className={css['invalid-feedback']}>{formik.errors.title}</div>
+          {formik.touched.title && formik.errors.title && <p className={css['invalid-feedback']}>{formik.errors.title}</p>}
         </div>
         <div className={css['form-group']}>
-          <label htmlFor='password'>Description</label>
+          <label htmlFor='description'>Description</label>
           <input
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.description}
-            className={rightClassesForInput('description')}
+            className={formik.touched.description && formik.errors.description ? css['is-invalid'] : ''}
             type='description'
             id='description'
             name='description'
           />
-          <div className={css['invalid-feedback']}>{formik.errors.description}</div>
+          {formik.touched.description && formik.errors.description && (
+            <p className={css['invalid-feedback']}>{formik.errors.description}</p>
+          )}
         </div>
-
         <button type='submit' className={css.button}>
           Add
         </button>

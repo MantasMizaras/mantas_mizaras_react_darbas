@@ -5,6 +5,7 @@ import * as Yup from 'yup';
 import { baseUrl, myFetch } from '../../utils';
 import { useHistory } from 'react-router-dom';
 import { useAuthCtx } from '../../store/AuthContext';
+import toast from 'react-hot-toast';
 
 const initValues = {
   email: '',
@@ -17,18 +18,20 @@ function LoginForm() {
   const formik = useFormik({
     initialValues: initValues,
     validationSchema: Yup.object({
-      email: Yup.string().email('Patikrinkite savo email').required(),
-      password: Yup.string().min(4, 'Mažiausiai 4 simboliai').max(10, 'Daugiausiai 10 simbolių').required(),
+      email: Yup.string().email('Patikrinkite savo email').required('Būtina įvesti e-mail'),
+      password: Yup.string().min(4, 'Mažiausiai 4 simboliai').max(10, 'Daugiausiai 10 simbolių').required('Slaptažodis būtinas'),
     }),
     onSubmit: async (values) => {
       const fetchLoginResult = await myFetch(`${baseUrl}/v1/auth/login`, 'POST', values);
 
       if (fetchLoginResult.msg === 'Successfully logged in') {
+        toast.success(`Successfully logged in: ${values.email}`);
         ctx.login(fetchLoginResult.token, values.email);
         history.replace('/');
       }
       console.log('fetchLoginResult ===', fetchLoginResult);
       if (!fetchLoginResult.token) {
+        toast.error('Nepavyko prisijungti');
         console.log('login failed');
         return;
       }
@@ -40,6 +43,7 @@ function LoginForm() {
   return (
     <div className={css['form-container']}>
       <h1>Login Page</h1>
+
       <form onSubmit={formik.handleSubmit}>
         <div className={css['form-group']}>
           <label htmlFor='email'>Email</label>
@@ -50,9 +54,9 @@ function LoginForm() {
             type='email'
             id='email'
             name='email'
-            className={formik.touched.email && formik.errors.email ? 'is-invalid ' : ''}
+            className={formik.touched.email && formik.errors.email ? css['is-invalid'] : ''}
           />
-          <div className='invalid-feedback'>{formik.errors.email}</div>
+          {formik.touched.email && formik.errors.email && <p className={css['invalid-feedback']}>{formik.errors.email}</p>}
         </div>
         <div className={css['form-group']}>
           <label htmlFor='password'>Password</label>
@@ -63,9 +67,11 @@ function LoginForm() {
             type='password'
             id='password'
             name='password'
-            className={formik.touched.password && formik.errors.password ? 'is-invalid ' : ''}
+            className={formik.touched.password && formik.errors.password ? css['is-invalid'] : ''}
           />
-          <div className='invalid-feedback'>{formik.errors.password}</div>
+          {formik.touched.password && formik.errors.password && (
+            <p className={css['invalid-feedback']}>{formik.errors.password}</p>
+          )}
         </div>
         <button type='submit' className={css.button}>
           Login

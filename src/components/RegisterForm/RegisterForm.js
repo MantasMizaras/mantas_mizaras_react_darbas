@@ -3,7 +3,7 @@ import css from './RegisterForm.module.css';
 import { useFormik } from 'formik';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
-
+import toast from 'react-hot-toast';
 import { baseUrl, myFetch } from '../../utils';
 import { useAuthCtx } from '../../store/AuthContext';
 
@@ -19,10 +19,10 @@ function RegisterForm() {
   const formik = useFormik({
     initialValues: initValues,
     validationSchema: Yup.object({
-      email: Yup.string().email('Please check your email').required(),
-      password: Yup.string().min(4, 'At least 8 characters').max(10).required(),
+      email: Yup.string().email('Please check your email').required('Būtina įvesti e-mail'),
+      password: Yup.string().min(4, 'At least 8 characters').max(10).required('Slaptažodis būtinas'),
       repeatPassword: Yup.string()
-        .required()
+        .required('Pakartokite slaptažodį')
         .oneOf([Yup.ref('password'), null], 'Passwords must match!'),
     }),
 
@@ -33,17 +33,15 @@ function RegisterForm() {
       console.log('valuesCopy ===', valuesCopy);
       const registerResult = await myFetch(`${baseUrl}v1/auth/register`, 'POST', valuesCopy);
       if (registerResult.changes === 1) {
+        toast.success(`Success! Account: ${values.email} created!`);
         ctx.login(registerResult.token, valuesCopy.email);
         history.replace('/login');
       }
       console.log('registerResult ===', registerResult);
-      // if (!registerResult.token) {
-      //   console.log('cannot register');
-      //   return;
-      // }
-      // ctx.register(registerResult.token);
-      // console.log('registerResult ===', registerResult);
-
+      if (registerResult.changes !== 1) {
+        toast.error(`New user wasn't created`);
+        return;
+      }
       console.log('submiting values ===', values);
     },
   });
@@ -53,16 +51,6 @@ function RegisterForm() {
     if (password !== repeatPassword) {
       console.log(`Passwords doesn't match`);
     }
-  }
-
-  function rightClassesForInput(field) {
-    let resultClasses = css['form-control'];
-
-    if (formik.touched[field]) {
-      resultClasses += formik.errors[field] ? ' is-invalid' : ' is-valid';
-    }
-
-    return resultClasses;
   }
 
   return (
@@ -76,12 +64,12 @@ function RegisterForm() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.email}
-            className={rightClassesForInput('email')}
+            className={formik.touched.email && formik.errors.email ? css['is-invalid'] : ''}
             type='email'
             id='email'
             name='email'
           />
-          <div className={css['invalid-feedback']}>{formik.errors.email}</div>
+          {formik.touched.email && formik.errors.email && <p className={css['invalid-feedback']}>{formik.errors.email}</p>}
         </div>
         <div className={css['form-group']}>
           <label htmlFor='password'>Password</label>
@@ -89,12 +77,14 @@ function RegisterForm() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.password}
-            className={rightClassesForInput('password')}
+            className={formik.touched.password && formik.errors.password ? css['is-invalid'] : ''}
             type='password'
             id='password'
             name='password'
           />
-          <div className={css['invalid-feedback']}>{formik.errors.password}</div>
+          {formik.touched.password && formik.errors.password && (
+            <p className={css['invalid-feedback']}>{formik.errors.password}</p>
+          )}
         </div>
         <div className={css['form-group']}>
           <label htmlFor='repeatPassword'>Repeat password</label>
@@ -102,12 +92,14 @@ function RegisterForm() {
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.repeatPassword}
-            className={rightClassesForInput('repeatPassword')}
+            className={formik.touched.repeatPassword && formik.errors.repeatPassword ? css['is-invalid'] : ''}
             type='password'
             id='repeatPassword'
             name='repeatPassword'
           />
-          <div className={css['invalid-feedback']}>{formik.errors.repeatPassword}</div>
+          {formik.touched.repeatPassword && formik.errors.repeatPassword && (
+            <p className={css['invalid-feedback']}>{formik.errors.repeatPassword}</p>
+          )}
         </div>
         <button type='submit' className={css.button}>
           Register

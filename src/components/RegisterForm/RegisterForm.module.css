@@ -13,12 +13,13 @@
   align-items: stretch;
 }
 
-.is-valid {
-  border: 0.01rem solid lightgreen;
+.invalid-feedback {
+  color: tomato;
+  margin-top: 0;
 }
 
 .is-invalid {
-  border: 0.01rem solid tomato;
+  border: 0.02rem solid tomato;
 }
 
 .button {

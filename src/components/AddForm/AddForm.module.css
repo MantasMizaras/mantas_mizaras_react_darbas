@@ -13,6 +13,15 @@
   align-items: stretch;
 }
 
+.invalid-feedback {
+  color: tomato;
+  margin-top: 0;
+}
+
+.is-invalid {
+  border: 0.02rem solid tomato;
+}
+
 .button {
   margin-top: 0.5rem;
 }
