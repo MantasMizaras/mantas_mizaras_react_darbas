@@ -4,6 +4,7 @@ import { useAuthCtx } from '../../store/AuthContext';
 
 function Header(props) {
   const { isUserLoggedIn, logout, userEmail } = useAuthCtx();
+  console.log('userEmail ===', userEmail);
   return (
     <header className={css.header}>
       <NavLink to='/'>
@@ -21,9 +22,11 @@ function Header(props) {
             <NavLink onClick={logout} className={css['nav-link']} to={'/login'}>
               Logout
             </NavLink>
-            <a className={css['nav-link']} href='/'>
-              {userEmail}
-            </a>
+            {/* <div>
+              <a className='nav-link disabled' href='/'>
+                {userEmail}
+              </a>
+            </div> */}
           </>
         )}
         {!isUserLoggedIn && (
