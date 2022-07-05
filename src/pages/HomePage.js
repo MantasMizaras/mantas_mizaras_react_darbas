@@ -20,25 +20,35 @@ function HomePage() {
       setSkills(fetchGetSkills);
     }
   };
+  console.log('skills ===', skills);
 
   useEffect(() => {
     if (token) getSkills();
   }, []);
 
-  return (
-    <div>
-      <h1>Home Page</h1>
-      {!isUserLoggedIn && <p>Jus esate neprisijunges, prasome prisiregistruoti</p>}
-      {isUserLoggedIn && <p>Sveiki atvyke!</p>}
+  if (skills.length !== 0) {
+    return (
+      <div>
+        <h1>Home Page</h1>
+        {!isUserLoggedIn && <p>Jus esate neprisijunges, prasome prisiregistruoti</p>}
+        {isUserLoggedIn && <p>Sveiki atvyke!</p>}
 
-      <div className={css['skills-grid']}>
-        {skills.map((sObj) => (
-          <Card key={sObj.id} {...sObj} />
-        ))}
+        <div className={css['skills-grid']}>
+          {skills.map((sObj) => (
+            <Card key={sObj.id} {...sObj} />
+          ))}
+        </div>
+        {/* <Card title='test' description='something to show for test' /> */}
       </div>
-      {/* <Card title='test' description='something to show for test' /> */}
-    </div>
-  );
+    );
+  } else {
+    return (
+      <div>
+        <h1>Home Page</h1>
+        <h3>Neturite jokių pridėtų skills'ų..</h3>
+      </div>
+    );
+  }
 }
 
 export default HomePage;
