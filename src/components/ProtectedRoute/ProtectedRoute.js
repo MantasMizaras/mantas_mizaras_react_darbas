@@ -1,3 +1,5 @@
+import css from './ProtectedRoute.module.css';
+
 import { Link, Route } from 'react-router-dom';
 import { useAuthCtx } from '../../store/AuthContext';
 
@@ -10,9 +12,9 @@ function ProtectedRoute(props) {
       {isUserLoggedIn ? (
         children
       ) : (
-        <div className='container'>
+        <div className={css.container404}>
           <h2>Please login</h2>
-          <div className='alert alert-danger'>You are not logged in!!!</div>
+          <div>You are not logged in!!!</div>
           <Link to={'/login'}>Login here 🌏</Link>
         </div>
       )}

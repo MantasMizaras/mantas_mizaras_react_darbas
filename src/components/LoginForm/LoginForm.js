@@ -19,8 +19,11 @@ function LoginForm() {
   const formik = useFormik({
     initialValues: initValues,
     validationSchema: Yup.object({
-      email: Yup.string().email('Patikrinkite savo email').required('Būtina įvesti e-mail'),
-      password: Yup.string().min(4, 'Mažiausiai 4 simboliai').max(10, 'Daugiausiai 10 simbolių').required('Slaptažodis būtinas'),
+      email: Yup.string().email('Please check your e-mail').required('E-mail required'),
+      password: Yup.string()
+        .min(4, 'At least 4 symbols are required')
+        .max(10, 'Up to 10 symbols are allowed')
+        .required('Password required'),
     }),
     onSubmit: async (values) => {
       const fetchLoginResult = await myFetch(`${baseUrl}/v1/auth/login`, 'POST', values);
@@ -40,7 +43,7 @@ function LoginForm() {
 
   return (
     <div className={css['form-container']}>
-      <h1>Login Page</h1>
+      <h1>Login here</h1>
 
       <form onSubmit={formik.handleSubmit}>
         <div className={css['form-group']}>
@@ -72,6 +75,12 @@ function LoginForm() {
           )}
         </div>
         <Button>Login</Button>
+        <p className={css['register-redirect']}>
+          Don't have an account yet?
+          <a className={css['register-link']} href='/register'>
+            Register here!
+          </a>
+        </p>
       </form>
     </div>
   );

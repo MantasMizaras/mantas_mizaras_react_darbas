@@ -18,10 +18,10 @@ function RegisterForm() {
   const formik = useFormik({
     initialValues: initValues,
     validationSchema: Yup.object({
-      email: Yup.string().email('Please check your email').required('Būtina įvesti e-mail'),
-      password: Yup.string().min(4, 'At least 8 characters').max(10).required('Slaptažodis būtinas'),
+      email: Yup.string().email('Please check your email').required('E-mail required'),
+      password: Yup.string().min(4, 'At least 8 characters').max(10).required('Password required'),
       repeatPassword: Yup.string()
-        .required('Pakartokite slaptažodį')
+        .required('Please repeat password')
         .oneOf([Yup.ref('password'), null], 'Passwords must match!'),
     }),
 
@@ -40,18 +40,11 @@ function RegisterForm() {
     },
   });
 
-  function matchPass() {
-    const { password, repeatPassword } = initValues;
-    if (password !== repeatPassword) {
-      console.log(`Passwords doesn't match`);
-    }
-  }
-
   return (
     <div className={css['form-container']}>
-      <h1>Register Page</h1>
+      <h1>Registration</h1>
 
-      <form onSubmit={formik.handleSubmit} onBlur={matchPass}>
+      <form onSubmit={formik.handleSubmit}>
         <div className={css['form-group']}>
           <label htmlFor='email'>Email</label>
           <input
