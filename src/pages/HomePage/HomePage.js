@@ -27,9 +27,9 @@ function HomePage() {
   if (skills.length !== 0) {
     return (
       <div className='container'>
-        <h1>Home Page</h1>
-        {!isUserLoggedIn && <p>Jus esate neprisijunges, prasome prisiregistruoti</p>}
-        {isUserLoggedIn && <p>Sveiki atvyke!</p>}
+        <h1>Skills corner</h1>
+        {!isUserLoggedIn && <h3>You're not logged in, please register or login.</h3>}
+        {isUserLoggedIn && <h3>Welcome aboard!</h3>}
 
         <div className={css['skills-grid']}>
           {skills.map((sObj) => (
@@ -40,9 +40,9 @@ function HomePage() {
     );
   } else {
     return (
-      <div>
-        <h1>Home Page</h1>
-        <h3>Neturite jokių pridėtų skills'ų..</h3>
+      <div className='container'>
+        <h1>Skills corner</h1>
+        <h3>No skills added..</h3>
       </div>
     );
   }
