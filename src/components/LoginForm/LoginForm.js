@@ -6,6 +6,7 @@ import { baseUrl, myFetch } from '../../utils';
 import { useHistory } from 'react-router-dom';
 import { useAuthCtx } from '../../store/AuthContext';
 import toast from 'react-hot-toast';
+import Button from '../UI/Button/Button';
 
 const initValues = {
   email: '',
@@ -29,14 +30,11 @@ function LoginForm() {
         ctx.login(fetchLoginResult.token, values.email);
         history.replace('/');
       }
-      console.log('fetchLoginResult ===', fetchLoginResult);
+
       if (!fetchLoginResult.token) {
         toast.error('Nepavyko prisijungti');
-        console.log('login failed');
         return;
       }
-      ctx.login(fetchLoginResult.token);
-      console.log('submiting values ===', values);
     },
   });
 
@@ -73,9 +71,7 @@ function LoginForm() {
             <p className={css['invalid-feedback']}>{formik.errors.password}</p>
           )}
         </div>
-        <button type='submit' className={css.button}>
-          Login
-        </button>
+        <Button>Login</Button>
       </form>
     </div>
   );

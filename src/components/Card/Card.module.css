@@ -1,8 +1,17 @@
 .card {
-  max-width: 20rem;
+  min-width: 80%;
   margin: 0 auto;
-  box-shadow: 0.2rem 0.5em 0.9rem grey;
-  border-radius: 0.3rem;
+  box-shadow: 0.2rem 0.5em 0.9rem rgb(117, 70, 0);
+  border-radius: 1rem;
   padding: 1rem;
   margin-top: 1rem;
+  background-color: rgb(227, 170, 83);
+}
+
+.card-title {
+  color: rgb(52, 52, 52);
+}
+
+.card-description {
+  color: rgb(72, 72, 72);
 }

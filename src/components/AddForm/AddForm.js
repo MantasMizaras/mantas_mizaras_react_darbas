@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 
 import css from './AddForm.module.css';
 import toast from 'react-hot-toast';
+import Button from '../UI/Button/Button';
 
 const initValues = {
   title: '',
@@ -21,17 +22,14 @@ function AddForm() {
       title: Yup.string()
         .min(2, 'At least 2 symbols are required')
         .max(15, 'Up to 15 symbols are allowed')
-        .required('Title laukas būtinas'),
+        .required('Title required'),
       description: Yup.string()
         .min(5, 'At least 5 symbols are required')
-        .max(80, 'Up to 80 symbols are allowed')
-        .required('Description laukas būtinas'),
+        .max(50, 'Up to 50 symbols are allowed')
+        .required('Description required'),
     }),
     onSubmit: async (values) => {
-      console.log('values ===', values);
-
       const addFetch = await myFetchAuth(`${baseUrl}/v1/content/skills`, 'POST', token, values);
-      console.log('addFetch ===', addFetch);
 
       if (addFetch.msg === 'Added new skill to account') {
         toast.success('New skill added succesfully');
@@ -62,7 +60,7 @@ function AddForm() {
         </div>
         <div className={css['form-group']}>
           <label htmlFor='description'>Description</label>
-          <input
+          <textarea
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
             value={formik.values.description}
@@ -75,9 +73,7 @@ function AddForm() {
             <p className={css['invalid-feedback']}>{formik.errors.description}</p>
           )}
         </div>
-        <button type='submit' className={css.button}>
-          Add
-        </button>
+        <Button>Add</Button>
       </form>
     </div>
   );

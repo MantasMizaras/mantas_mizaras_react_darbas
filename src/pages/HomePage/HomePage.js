@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import Card from '../components/Card/Card';
-import { useAuthCtx } from '../store/AuthContext';
-import { baseUrl, myFetchAuth } from '../utils';
+import Card from '../../components/Card/Card';
+import { useAuthCtx } from '../../store/AuthContext';
+import { baseUrl, myFetchAuth } from '../../utils';
 
 import css from './HomePage.module.css';
 
@@ -28,7 +28,7 @@ function HomePage() {
 
   if (skills.length !== 0) {
     return (
-      <div>
+      <div className='container'>
         <h1>Home Page</h1>
         {!isUserLoggedIn && <p>Jus esate neprisijunges, prasome prisiregistruoti</p>}
         {isUserLoggedIn && <p>Sveiki atvyke!</p>}
@@ -38,7 +38,6 @@ function HomePage() {
             <Card key={sObj.id} {...sObj} />
           ))}
         </div>
-        {/* <Card title='test' description='something to show for test' /> */}
       </div>
     );
   } else {
