@@ -15,4 +15,4 @@
 
 # What's inside app ?
 
-This is app that allows you to register and then login to look to your own skills, which you can easily add in app. The app is fully protected for registered users only.
+This is app that allows you to register and then login to look to your own skills, which you can easily add in app. Also posible search skills by title. The app is fully protected for registered users only.
