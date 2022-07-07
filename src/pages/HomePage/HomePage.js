@@ -15,12 +15,10 @@ function HomePage() {
 
   const getSkills = async (values) => {
     const fetchGetSkills = await myFetchAuth(`${baseUrl}/v1/content/skills`, 'GET', token, values);
-    console.log('fetchGetSkills ===', fetchGetSkills);
     if (Array.isArray(fetchGetSkills)) {
       setSkills(fetchGetSkills);
     }
   };
-  console.log('skills ===', skills);
 
   useEffect(() => {
     if (token) getSkills();

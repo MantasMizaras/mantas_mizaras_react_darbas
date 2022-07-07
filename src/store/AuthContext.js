@@ -13,17 +13,19 @@ AuthContext.displayName = 'AuthContext';
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token'));
-  const [userEmail, setUserEmail] = useState('');
+  const [userEmail, setUserEmail] = useState(localStorage.getItem('email'));
 
   const login = (receivedToken, receivedEmail) => {
     setToken(receivedToken);
     setUserEmail(receivedEmail);
     localStorage.setItem('token', receivedToken);
+    localStorage.setItem('email', receivedEmail);
   };
   const logout = () => {
     setToken(null);
     setUserEmail(null);
     localStorage.removeItem('token');
+    localStorage.removeItem('email');
   };
 
   const ctx = {

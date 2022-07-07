@@ -6,6 +6,11 @@
   align-items: center;
 }
 
+.nav-container {
+  display: flex;
+  align-items: center;
+}
+
 .nav-link {
   padding: 0.5em 1em;
   font-size: 20px;
@@ -13,7 +18,7 @@
   text-decoration: none;
 }
 .nav-link:hover {
-  background-color: rgb(251, 87, 87);
+  background-color: rgb(227, 170, 83);
 }
 
 .img {
@@ -24,7 +29,7 @@
 }
 
 .email {
-  font-size: 10px;
+  font-size: 1rem;
   color: aliceblue;
-  border: 1px solid greenyellow;
+  padding: 0 0.5rem;
 }

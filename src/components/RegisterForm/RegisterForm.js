@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 import toast from 'react-hot-toast';
 import { baseUrl, myFetch } from '../../utils';
-import { useAuthCtx } from '../../store/AuthContext';
+import Button from '../UI/Button/Button';
 
 const initValues = {
   email: '',
@@ -15,7 +15,6 @@ const initValues = {
 
 function RegisterForm() {
   const history = useHistory();
-  const ctx = useAuthCtx();
   const formik = useFormik({
     initialValues: initValues,
     validationSchema: Yup.object({
@@ -29,20 +28,15 @@ function RegisterForm() {
     onSubmit: async (values) => {
       const valuesCopy = { ...values };
       delete valuesCopy['repeatPassword'];
-      console.log('values ===', values);
-      console.log('valuesCopy ===', valuesCopy);
       const registerResult = await myFetch(`${baseUrl}v1/auth/register`, 'POST', valuesCopy);
       if (registerResult.changes === 1) {
         toast.success(`Success! Account: ${values.email} created!`);
-        ctx.login(registerResult.token, valuesCopy.email);
         history.replace('/login');
       }
-      console.log('registerResult ===', registerResult);
       if (registerResult.changes !== 1) {
         toast.error(`New user wasn't created`);
         return;
       }
-      console.log('submiting values ===', values);
     },
   });
 
@@ -101,9 +95,7 @@ function RegisterForm() {
             <p className={css['invalid-feedback']}>{formik.errors.repeatPassword}</p>
           )}
         </div>
-        <button type='submit' className={css.button}>
-          Register
-        </button>
+        <Button>Register</Button>
       </form>
     </div>
   );
