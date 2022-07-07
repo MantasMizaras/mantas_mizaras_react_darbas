@@ -1,0 +1,11 @@
+.container {
+  /* padding: 0 100px; */
+  margin: 0 auto;
+  max-width: 1000px;
+}
+
+h1,
+label,
+h3 {
+  color: rgb(52, 52, 52);
+}
